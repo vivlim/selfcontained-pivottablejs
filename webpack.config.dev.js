@@ -4,11 +4,12 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
+const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default; // unused?
 
 module.exports = {
   entry: './src/index.js',
   mode: 'development',
+  devtool: 'inline-source-map',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -16,6 +17,7 @@ module.exports = {
   module: {
     rules: [
       {
+        // Exposes jquery to the global browser scope
         test: require.resolve("jquery"),
         loader: "expose-loader",
         options: {
@@ -23,6 +25,7 @@ module.exports = {
         },
       },
       {
+        // Applies css directly to the fore<head>
         test: /\.css$/,
         use: [
           {
@@ -37,10 +40,16 @@ module.exports = {
       },
     ],
   },
-  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin(),
+    // Embeds js bundle directly in html instead of a separate file
     new HtmlInlineScriptPlugin(),
+    // i'm not sure i'm actually using this anymore
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
+    // Exposes jquery to other modules, such as jquery-ui and pivottable itself
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
