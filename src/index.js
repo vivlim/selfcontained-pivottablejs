@@ -10,7 +10,7 @@ require("../node_modules/pivottable/dist/pivot.css")
 // of course, we want pivottable's implementation in the bundle too.
 require("pivottable");
 // and plotly & its renderers
-import * as plotly from "plotly.js";
+import * as plotly from "plotly.js-cartesian-dist";
 require("../node_modules/pivottable/dist/plotly_renderers.js")
 
 // this is the data that could theoretically be patched out in the built html file

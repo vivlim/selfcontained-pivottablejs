@@ -40,6 +40,11 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    alias: {
+      "plotly.js": "plotly.js-cartesian-dist",
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin(),
     // Embeds js bundle directly in html instead of a separate file
