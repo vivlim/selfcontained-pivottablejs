@@ -20,16 +20,16 @@ const embeddedData = {"fileEmbeddedData": "replaceThisPlaceholderPlease"};
         var derivers = $.pivotUtilities.derivers;
         var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)
 
+        if (window.injectedData === undefined || window.injectedData.data === undefined || window.injectedData.options === undefined){
+            alert("injected data is missing from this self-contained pivottable, cannot display")
+        }
+
         var pivotContainer = $('<div />').appendTo('body');
         pivotContainer.pivotUI(
-            [
-                {color: "blue", shape: "circle"},
-                {color: "red", shape: "triangle"}
-            ],
+            window.injectedData.data,
             {
                 renderers: renderers,
-                rows: ["color"],
-                cols: ["shape"],
+                ...window.injectedData.options,
             }
         );
      })

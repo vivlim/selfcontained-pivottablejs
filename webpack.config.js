@@ -6,6 +6,7 @@ const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default; // unused?
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const LicensePlugin = require('webpack-license-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -46,7 +47,9 @@ module.exports = {
     },
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      minify: false,
+    }),
     // Embeds js bundle directly in html instead of a separate file
     new HtmlInlineScriptPlugin(),
     // i'm not sure i'm actually using this anymore
@@ -57,6 +60,7 @@ module.exports = {
     new NodePolyfillPlugin({
       additionalAliases: ['process']
     }),
+    new LicensePlugin({}),
     // Exposes jquery to other modules, such as jquery-ui and pivottable itself
     new webpack.ProvidePlugin({
       $: 'jquery',
