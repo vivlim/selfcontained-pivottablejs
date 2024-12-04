@@ -4,4 +4,4 @@
  * @param {unknown} options
  * @param {string} targetFilename
  */
-export declare function inject(data: unknown, options: unknown, targetFilename: string): void;
+export declare function inject(data: unknown, options: () => any, targetFilename: string): void;

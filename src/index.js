@@ -13,9 +13,6 @@ require("pivottable");
 import * as plotly from "plotly.js-cartesian-dist";
 require("../node_modules/pivottable/dist/plotly_renderers.js")
 
-// this is the data that could theoretically be patched out in the built html file
-const embeddedData = {"fileEmbeddedData": "replaceThisPlaceholderPlease"};
-
     $(function(){
         var derivers = $.pivotUtilities.derivers;
         var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)
@@ -29,7 +26,7 @@ const embeddedData = {"fileEmbeddedData": "replaceThisPlaceholderPlease"};
             window.injectedData.data,
             {
                 renderers: renderers,
-                ...window.injectedData.options,
+                ...(window.injectedOptionsFactory()),
             }
         );
      })

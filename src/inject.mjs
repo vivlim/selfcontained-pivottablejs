@@ -16,7 +16,6 @@ export async function inject (data, options, targetFilename){
 
   const dataToInject = {
     data: data,
-    options: options,
   }
 
   const injectTransform = new TransformStream({
@@ -26,7 +25,8 @@ export async function inject (data, options, targetFilename){
         const endOfOpeningTag = chunk.indexOf(">", startLocation);
         if (endOfOpeningTag === -1){throw new Error("couldn't find > at start of injected data tag")}
         controller.enqueue(chunk.slice(0, endOfOpeningTag + 1));
-        controller.enqueue(`\nwindow.injectedData = ${JSON.stringify(dataToInject)}\n`)
+        controller.enqueue(`\twindow.injectedOptionsFactory = ${options.toString()}\n\n`)
+        controller.enqueue(`\twindow.injectedData = ${JSON.stringify(dataToInject)}\n`)
         const closeLocation = chunk.indexOf(tabledataEnd, endOfOpeningTag);
         controller.enqueue(chunk.slice(closeLocation));
       }
